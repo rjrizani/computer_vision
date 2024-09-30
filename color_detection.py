@@ -1,7 +1,9 @@
 import cv2
 import numpy as np
 
-image_path = 'pinguin.jpeg'
+image_path = 'rabit.jpeg'
+
+image = cv2.imread(image_path)
 color_range = {
     'red': ((0, 0, 200), (20, 20, 255)),
     'blue': ((100, 100, 0), (255, 255, 100)),
@@ -21,7 +23,6 @@ def color_detection(image,lower_color, upper_color):
     result = cv2.bitwise_and(image, image, mask=mask)
     return result
 
-image = cv2.imread(image_path)
 
 if color in color_range.keys():
     result = color_detection(image, np.array(color_range[color][0]), np.array(color_range[color][1]))
