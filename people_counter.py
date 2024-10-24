@@ -13,8 +13,7 @@ cap = cv2.VideoCapture("orang.mp4")
 while True:
     poeple_count = set()
     ret, frame = cap.read()
-    print(type(frame))
-    print(ret)
+   
     if not ret:
         break
 
