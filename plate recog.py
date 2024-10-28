@@ -57,6 +57,7 @@ for image_file in os.listdir(image_folder):
         else:
             print('incorrect')
         time.sleep(1)
+        print()
 
 
 
