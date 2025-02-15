@@ -9,6 +9,7 @@ import re
 
 image_folder = 'plat/images/'
 actual_data = pd.read_csv('plat/actual_data.csv', sep=';')
+print(actual_data.columns)
 #print(actual_data)
 
 data_to_append = []
@@ -47,6 +48,7 @@ for image_file in os.listdir(image_folder):
 
 
         actual_plate = actual_data[actual_data['image_file'] == image_file]['actual_number_plate'].values[0]
+
         print(actual_plate)
 
         detected_plate = process_image(image_path)
@@ -58,6 +60,44 @@ for image_file in os.listdir(image_folder):
             print('incorrect')
         time.sleep(1)
         print()
+
+
+        def calculate_accuracy(detected_plate, actual_plates):
+            detected_chars = list(detected_plate.lower())
+            actual_chars = list(actual_plates.lower())
+            correct_chars = [d == a for d, a in zip(detected_chars, actual_chars)]
+            return (sum(correct_chars) / len(correct_chars)) * 100
+
+
+        accuracy = calculate_accuracy(detected_plate, actual_plate)
+        print("Accuracy: {:.2f}%".format(accuracy))
+
+        table = []
+
+        table.append(
+            {'date': time.asctime(time.localtime(time.time())),
+            'actual_number_plate': actual_plate,
+            'detected_number_plate': detected_plate,
+            'accuracy': accuracy,}
+        )
+
+        existing_data = pd.DataFrame(columns=['date', 'actual_number_plate', 'detected_number_plate', 'accuracy'])
+        new_data = pd.DataFrame(table)
+
+        existing_data = existing_data.dropna(axis=1, how='all')
+        new_data = new_data.dropna(axis=1, how='all')
+
+        updated_data = pd.concat([existing_data, new_data], ignore_index=True)
+        updated_data.to_csv('plat/actual_data.csv', index=False)
+
+        print(updated_data)
+
+
+
+
+
+
+
 
 
 

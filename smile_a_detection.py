@@ -1,6 +1,6 @@
 import cv2
 face_cascade=cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
-smile_cascade=cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_smile.xml')
+smile_cascade=cv2.CascadeClassifier('haarcascade_mcs_mouth.xml')
 
 cap = cv2.VideoCapture(0)
 
